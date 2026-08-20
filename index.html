@@ -1,476 +1,464 @@
 <script>
-/* ============================================================
-   GOOGLE SHEETS / GOOGLE APPS SCRIPT
-   Website → Google Apps Script → Google Sheets
+document.addEventListener("DOMContentLoaded", function () {
 
-   SAU KHI DEPLOY APPS SCRIPT:
-   Dán URL có dạng:
-   https://script.google.com/macros/s/XXXXXXXX/exec
-
-   vào GOOGLE_SCRIPT_URL bên dưới.
-   ============================================================ */
-
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFiIj-0nwQ52cOAxu3xc3Ae54ZjfkmPTut-w4pvf_JVoZkuxeuD49ATWyPbN3DiRJWOA/exec";
-// Ví dụ:
-// const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/XXXXXXXXXXXX/exec";
+  // ============================================================
+  // URL WEB APP GOOGLE APPS SCRIPT
+  // Sau này bạn chỉ cần dán URL /exec vào đây
+  // ============================================================
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFiIj-0nwQ52cOAxu3xc3Ae54ZjfkmPTut-w4pvf_JVoZkuxeuD49ATWyPbN3DiRJWOA/exec";
 
 
-/* ============================================================
-   HIỂN THỊ TEAM ĐƯỢC CHỌN
-   ============================================================ */
+  // ============================================================
+  // LẤY CÁC ELEMENT
+  // ============================================================
+  const form = document.getElementById("applyForm");
+  const successBox = document.getElementById("successBox");
+  const formErr = document.getElementById("formErr");
+  const submitBtn = document.getElementById("submitBtn");
 
-const teamRadios = document.querySelectorAll('input[name="team"]');
+  const teamRadios = document.querySelectorAll('input[name="team"]');
+  const teamOpts = document.querySelectorAll(".team-opt");
 
-const teamOpts = document.querySelectorAll('.team-opt');
+  const sections = {
+    social: document.getElementById("sec-social"),
+    production: document.getElementById("sec-production"),
+    copywriter: document.getElementById("sec-copywriter")
+  };
 
-const sections = {
-  social: document.getElementById('sec-social'),
-  production: document.getElementById('sec-production'),
-  copywriter: document.getElementById('sec-copywriter')
-};
 
-teamRadios.forEach(radio => {
+  // ============================================================
+  // KIỂM TRA ELEMENT
+  // ============================================================
+  if (!form) {
+    console.error("Không tìm thấy #applyForm");
+    return;
+  }
 
-  radio.addEventListener('change', () => {
+  if (!submitBtn) {
+    console.error("Không tìm thấy #submitBtn");
+    return;
+  }
 
-    // Xóa trạng thái active cũ
-    teamOpts.forEach(option => {
-      option.classList.remove('active');
-    });
 
-    // Ẩn tất cả section
-    Object.values(sections).forEach(section => {
-      section.style.display = 'none';
-    });
+  // ============================================================
+  // CHỌN TEAM
+  // ============================================================
+  teamRadios.forEach(function (radio) {
 
-    // Tìm team đang được chọn
-    const selectedOption = radio.closest('.team-opt');
+    radio.addEventListener("change", function () {
 
-    if (selectedOption) {
+      // Xóa active của tất cả team
+      teamOpts.forEach(function (option) {
+        option.classList.remove("active");
+      });
 
-      selectedOption.classList.add('active');
+      // Ẩn tất cả section
+      Object.values(sections).forEach(function (section) {
+        if (section) {
+          section.style.display = "none";
+        }
+      });
 
-      const teamKey = selectedOption.getAttribute('data-team');
+      // Team đang chọn
+      const selectedTeam = radio.closest(".team-opt");
+
+      if (!selectedTeam) return;
+
+      selectedTeam.classList.add("active");
+
+      const teamKey = selectedTeam.getAttribute("data-team");
 
       if (sections[teamKey]) {
-        sections[teamKey].style.display = 'block';
+        sections[teamKey].style.display = "block";
       }
-    }
-  });
-
-});
-
-
-/* ============================================================
-   CHIP SELECTOR
-   ============================================================ */
-
-document.querySelectorAll('.chip').forEach(chip => {
-
-  chip.addEventListener('click', () => {
-
-    const input = chip.querySelector('input');
-
-    if (!input) return;
-
-    input.checked = !input.checked;
-
-    chip.classList.toggle('checked', input.checked);
+    });
 
   });
 
-});
 
+  // ============================================================
+  // CHIP CHECKBOX
+  // ============================================================
+  document.querySelectorAll(".chip").forEach(function (chip) {
 
-/* ============================================================
-   LẤY GIÁ TRỊ CÁC CHIP ĐƯỢC CHỌN
-   ============================================================ */
+    chip.addEventListener("click", function (event) {
 
-function getChipValues(containerId) {
+      // Nếu click trực tiếp vào checkbox thì không toggle 2 lần
+      if (event.target.tagName.toLowerCase() === "input") {
+        return;
+      }
 
-  return Array.from(
-    document.querySelectorAll('#' + containerId + ' input:checked')
-  ).map(input => input.value);
+      const input = chip.querySelector("input");
 
-}
+      if (!input) return;
 
+      input.checked = !input.checked;
 
-/* ============================================================
-   GỬI DỮ LIỆU ĐẾN GOOGLE APPS SCRIPT
-   ============================================================ */
-
-async function submitToGoogleSheet(data) {
-
-  if (!GOOGLE_SCRIPT_URL) {
-    throw new Error(
-      'Chưa cấu hình GOOGLE_SCRIPT_URL. Hãy dán URL Google Apps Script.'
-    );
-  }
-
-  const response = await fetch(GOOGLE_SCRIPT_URL, {
-    method: 'POST',
-
-    headers: {
-      'Content-Type': 'text/plain;charset=utf-8'
-    },
-
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error('Không thể kết nối Google Apps Script.');
-  }
-
-  return true;
-}
-
-
-/* ============================================================
-   FORM
-   ============================================================ */
-
-const form = document.getElementById('applyForm');
-
-const successBox = document.getElementById('successBox');
-
-const formErr = document.getElementById('formErr');
-
-const submitBtn = document.getElementById('submitBtn');
-
-
-/* ============================================================
-   SUBMIT FORM
-   ============================================================ */
-
-form.addEventListener('submit', async (e) => {
-
-  e.preventDefault();
-
-  formErr.style.display = 'none';
-
-
-  /* ----------------------------------------------------------
-     KIỂM TRA THÔNG TIN CƠ BẢN
-     ---------------------------------------------------------- */
-
-  const team = document.querySelector(
-    'input[name="team"]:checked'
-  );
-
-  if (!form.checkValidity() || !team) {
-
-    formErr.style.display = 'block';
-
-    form.reportValidity();
-
-    return;
-  }
-
-
-  /* ----------------------------------------------------------
-     XÁC ĐỊNH TEAM
-     ---------------------------------------------------------- */
-
-  const teamValue = team.value;
-
-  let teamKey;
-
-  if (teamValue === 'Social Team') {
-
-    teamKey = 'social';
-
-  } else if (teamValue === 'Production Team') {
-
-    teamKey = 'production';
-
-  } else {
-
-    teamKey = 'copywriter';
-
-  }
-
-
-  /* ----------------------------------------------------------
-     KIỂM TRA CÂU HỎI BẮT BUỘC THEO TEAM
-     ---------------------------------------------------------- */
-
-  const requiredMap = {
-
-    social: [
-      's1',
-      's2',
-      's4'
-    ],
-
-    production: [
-      'p3'
-    ],
-
-    copywriter: [
-      'c1',
-      'c2',
-      'c4'
-    ]
-
-  };
-
-
-  let missing = false;
-
-
-  requiredMap[teamKey].forEach(id => {
-
-    const element = document.getElementById(id);
-
-    if (!element || !element.value.trim()) {
-
-      missing = true;
-
-    }
+      chip.classList.toggle("checked", input.checked);
+    });
 
   });
 
 
-  /* Social */
+  // ============================================================
+  // LẤY GIÁ TRỊ CHIP
+  // ============================================================
+  function getChipValues(containerId) {
 
-  if (
-    teamKey === 'social' &&
-    getChipValues('s3chips').length === 0
-  ) {
+    const container = document.getElementById(containerId);
 
-    missing = true;
+    if (!container) return [];
+
+    return Array.from(
+      container.querySelectorAll("input:checked")
+    ).map(function (input) {
+      return input.value;
+    });
 
   }
 
 
-  /* Production */
-
-  if (teamKey === 'production') {
+  // ============================================================
+  // GỬI DỮ LIỆU SANG GOOGLE APPS SCRIPT
+  // ============================================================
+  async function submitToGoogleSheet(data) {
 
     if (
-      getChipValues('p1chips').length === 0 ||
-      getChipValues('p4chips').length === 0 ||
-      !document.querySelector('input[name="p2"]:checked')
+      !APPS_SCRIPT_URL ||
+      APPS_SCRIPT_URL === "DÁN_URL_APPS_SCRIPT_VÀO_ĐÂY"
     ) {
-
-      missing = true;
-
+      throw new Error("Chưa nhập URL Google Apps Script");
     }
 
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      throw new Error("Google Apps Script trả về lỗi");
+    }
+
+    return await response.text();
   }
 
 
-  /* Copywriter */
+  // ============================================================
+  // SUBMIT FORM
+  // ============================================================
+  form.addEventListener("submit", async function (e) {
 
-  if (
-    teamKey === 'copywriter' &&
-    getChipValues('c3chips').length === 0
-  ) {
+    e.preventDefault();
 
-    missing = true;
+    formErr.style.display = "none";
 
-  }
 
+    // ----------------------------------------------------------
+    // KIỂM TRA TEAM
+    // ----------------------------------------------------------
+    const team = document.querySelector(
+      'input[name="team"]:checked'
+    );
 
-  /* Thời gian */
+    if (!form.checkValidity() || !team) {
 
-  if (
-    getChipValues('timechips').length === 0
-  ) {
+      formErr.textContent =
+        "Bạn ơi, còn thiếu vài câu bắt buộc (*) ở trên nè!";
 
-    missing = true;
+      formErr.style.display = "block";
 
-  }
+      form.reportValidity();
 
+      return;
+    }
 
-  if (missing) {
 
-    formErr.textContent =
-      'Bạn ơi, còn thiếu vài câu bắt buộc (*) ở trên nè!';
+    // ----------------------------------------------------------
+    // XÁC ĐỊNH TEAM
+    // ----------------------------------------------------------
+    const teamValue = team.value;
 
-    formErr.style.display = 'block';
+    let teamKey;
 
-    return;
+    if (teamValue === "Social Team") {
+      teamKey = "social";
+    }
+    else if (teamValue === "Production Team") {
+      teamKey = "production";
+    }
+    else {
+      teamKey = "copywriter";
+    }
 
-  }
 
+    // ----------------------------------------------------------
+    // KIỂM TRA CÂU HỎI RIÊNG CỦA TEAM
+    // ----------------------------------------------------------
+    const requiredMap = {
 
-  /* ==========================================================
-     GỘP CÂU TRẢ LỜI THEO TEAM
-     ========================================================== */
+      social: [
+        "s1",
+        "s2",
+        "s4"
+      ],
 
-  let detailsText = '';
+      production: [
+        "p3"
+      ],
 
+      copywriter: [
+        "c1",
+        "c2",
+        "c4"
+      ]
 
-  /* ---------------- SOCIAL ---------------- */
+    };
 
-  if (teamKey === 'social') {
 
-    detailsText =
+    let missing = false;
 
-      `[Content đỉnh & vì sao]\n` +
-      `${document.getElementById('s1').value}\n\n` +
 
-      `[Content khiến bạn ước gì nghĩ ra trước]\n` +
-      `${document.getElementById('s2').value}\n\n` +
+    requiredMap[teamKey].forEach(function (id) {
 
-      `[Điểm mạnh]\n` +
-      `${getChipValues('s3chips').join(', ')}\n\n` +
+      const element = document.getElementById(id);
 
-      `[Xử lý sự kiện nhàm chán]\n` +
-      `${document.getElementById('s4').value}`;
+      if (!element || !element.value.trim()) {
+        missing = true;
+      }
 
-  }
-
-
-  /* ---------------- PRODUCTION ---------------- */
-
-  else if (teamKey === 'production') {
-
-    const cameraLevel =
-      document.querySelector(
-        'input[name="p2"]:checked'
-      )?.value || '';
-
-
-    detailsText =
-
-      `[Kinh nghiệm]\n` +
-      `${getChipValues('p1chips').join(', ')}\n\n` +
-
-      `[Mức độ thoải mái trước máy quay, 1-5]\n` +
-      `${cameraLevel}\n\n` +
-
-      `[Xử lý sự cố bất ngờ]\n` +
-      `${document.getElementById('p3').value}\n\n` +
-
-      `[Vai trò muốn thử]\n` +
-      `${getChipValues('p4chips').join(', ')}`;
-
-  }
-
-
-  /* ---------------- COPYWRITER ---------------- */
-
-  else {
-
-    detailsText =
-
-      `[Headline PR]\n` +
-      `${document.getElementById('c1').value}\n\n` +
-
-      `[Đoạn kể chuyện]\n` +
-      `${document.getElementById('c2').value}\n\n` +
-
-      `[Dạng bài tự tin nhất]\n` +
-      `${getChipValues('c3chips').join(', ')}\n\n` +
-
-      `[Bài viết ưng ý]\n` +
-      `${document.getElementById('c4').value}`;
-
-  }
-
-
-  /* ==========================================================
-     TẠO DỮ LIỆU GỬI GOOGLE SHEETS
-     ========================================================== */
-
-  const entry = {
-
-    fullname:
-      document.getElementById('fullname').value.trim(),
-
-    msv:
-      document.getElementById('msv').value.trim(),
-
-    khoa:
-      document.getElementById('khoa').value.trim(),
-
-    nganh:
-      document.getElementById('nganh').value.trim(),
-
-    phone:
-      document.getElementById('phone').value.trim(),
-
-    email:
-      document.getElementById('email').value.trim(),
-
-    social:
-      document.getElementById('social').value.trim(),
-
-    portfolio:
-      document.getElementById('portfolio').value.trim(),
-
-    team:
-      teamValue,
-
-    details:
-      detailsText,
-
-    why:
-      document.getElementById('why').value.trim(),
-
-    time:
-      getChipValues('timechips').join(', '),
-
-    finalpitch:
-      document.getElementById('finalpitch').value.trim()
-
-  };
-
-
-  /* ==========================================================
-     TRẠNG THÁI ĐANG GỬI
-     ========================================================== */
-
-  submitBtn.disabled = true;
-
-  submitBtn.textContent = 'ĐANG GỬI...';
-
-
-  try {
-
-    /* --------------------------------------------------------
-       GỬI TRỰC TIẾP ĐẾN GOOGLE APPS SCRIPT
-       -------------------------------------------------------- */
-
-    await submitToGoogleSheet(entry);
-
-
-    /* --------------------------------------------------------
-       HIỂN THỊ THÀNH CÔNG
-       -------------------------------------------------------- */
-
-    form.style.display = 'none';
-
-    successBox.style.display = 'block';
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
     });
 
 
-  } catch (error) {
-
-    console.error(
-      'Lỗi gửi Google Sheets:',
-      error
-    );
-
-
-    submitBtn.disabled = false;
-
-    submitBtn.textContent = 'GỬI ĐĂNG KÝ';
+    // Social
+    if (
+      teamKey === "social" &&
+      getChipValues("s3chips").length === 0
+    ) {
+      missing = true;
+    }
 
 
-    formErr.textContent =
-      'Có lỗi khi gửi đăng ký. Bạn thử lại giúp mình nhé!';
+    // Production
+    if (teamKey === "production") {
+
+      if (getChipValues("p1chips").length === 0) {
+        missing = true;
+      }
+
+      if (getChipValues("p4chips").length === 0) {
+        missing = true;
+      }
+
+      if (!document.querySelector('input[name="p2"]:checked')) {
+        missing = true;
+      }
+
+    }
 
 
-    formErr.style.display = 'block';
+    // Copywriter
+    if (
+      teamKey === "copywriter" &&
+      getChipValues("c3chips").length === 0
+    ) {
+      missing = true;
+    }
 
-  }
+
+    // Thời gian
+    if (getChipValues("timechips").length === 0) {
+      missing = true;
+    }
+
+
+    if (missing) {
+
+      formErr.textContent =
+        "Bạn ơi, còn thiếu vài câu bắt buộc (*) ở trên nè!";
+
+      formErr.style.display = "block";
+
+      return;
+    }
+
+
+    // ==========================================================
+    // GỘP CÂU TRẢ LỜI TEAM
+    // ==========================================================
+    let detailsText = "";
+
+
+    // SOCIAL
+    if (teamKey === "social") {
+
+      detailsText =
+        "[Content đỉnh & vì sao]\n" +
+        document.getElementById("s1").value +
+        "\n\n" +
+
+        "[Content khiến bạn ước gì nghĩ ra trước]\n" +
+        document.getElementById("s2").value +
+        "\n\n" +
+
+        "[Điểm mạnh]\n" +
+        getChipValues("s3chips").join(", ") +
+        "\n\n" +
+
+        "[Xử lý sự kiện nhàm chán]\n" +
+        document.getElementById("s4").value;
+
+    }
+
+
+    // PRODUCTION
+    else if (teamKey === "production") {
+
+      const p2 = document.querySelector(
+        'input[name="p2"]:checked'
+      );
+
+      detailsText =
+        "[Kinh nghiệm]\n" +
+        getChipValues("p1chips").join(", ") +
+        "\n\n" +
+
+        "[Mức độ thoải mái trước máy quay, 1-5]\n" +
+        (p2 ? p2.value : "") +
+        "\n\n" +
+
+        "[Xử lý sự cố bất ngờ]\n" +
+        document.getElementById("p3").value +
+        "\n\n" +
+
+        "[Vai trò muốn thử]\n" +
+        getChipValues("p4chips").join(", ");
+
+    }
+
+
+    // COPYWRITER
+    else {
+
+      detailsText =
+        "[Headline PR]\n" +
+        document.getElementById("c1").value +
+        "\n\n" +
+
+        "[Đoạn kể chuyện]\n" +
+        document.getElementById("c2").value +
+        "\n\n" +
+
+        "[Dạng bài tự tin nhất]\n" +
+        getChipValues("c3chips").join(", ") +
+        "\n\n" +
+
+        "[Bài viết ưng ý]\n" +
+        document.getElementById("c4").value;
+
+    }
+
+
+    // ==========================================================
+    // TẠO OBJECT DỮ LIỆU
+    // ==========================================================
+    const entry = {
+
+      fullname:
+        document.getElementById("fullname").value.trim(),
+
+      msv:
+        document.getElementById("msv").value.trim(),
+
+      khoa:
+        document.getElementById("khoa").value.trim(),
+
+      nganh:
+        document.getElementById("nganh").value.trim(),
+
+      phone:
+        document.getElementById("phone").value.trim(),
+
+      email:
+        document.getElementById("email").value.trim(),
+
+      social:
+        document.getElementById("social").value.trim(),
+
+      portfolio:
+        document.getElementById("portfolio").value.trim(),
+
+      team:
+        teamValue,
+
+      details:
+        detailsText,
+
+      why:
+        document.getElementById("why").value.trim(),
+
+      time:
+        getChipValues("timechips").join(", "),
+
+      finalpitch:
+        document.getElementById("finalpitch").value.trim(),
+
+      submittedAt:
+        new Date().toISOString()
+
+    };
+
+
+    // ==========================================================
+    // ĐỔI TRẠNG THÁI BUTTON
+    // ==========================================================
+    submitBtn.disabled = true;
+
+    submitBtn.textContent = "ĐANG GỬI...";
+
+
+    // ==========================================================
+    // GỬI GOOGLE SHEET
+    // ==========================================================
+    try {
+
+      await submitToGoogleSheet(entry);
+
+
+      // --------------------------------------------------------
+      // HIỆN SUCCESS
+      // --------------------------------------------------------
+      form.style.display = "none";
+
+      successBox.style.display = "block";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+
+    }
+    catch (error) {
+
+      console.error(error);
+
+      submitBtn.disabled = false;
+
+      submitBtn.textContent = "GỬI ĐĂNG KÝ";
+
+      formErr.textContent =
+        "Có lỗi khi gửi dữ liệu. Bạn thử lại giúp mình nhé!";
+
+      formErr.style.display = "block";
+
+    }
+
+  });
 
 });
 </script>
