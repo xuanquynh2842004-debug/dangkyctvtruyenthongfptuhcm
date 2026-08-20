@@ -1,572 +1,476 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bạn có thể là ai? — Đăng ký CTV Truyền thông FPTU</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;600;700;800;900&display=swap');
-
-  :root{
-    --navy:#161a4a;
-    --yellow:#ffdf3d;
-    --pink:#ff3fa4;
-    --pink-deep:#c2126f;
-    --blue:#2c4bff;
-    --blue-deep:#101a8f;
-    --maroon:#7a1414;
-    --orange:#e8622c;
-    --cream:#fff8e7;
-    --ink:#1c1c28;
-  }
-
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:'Nunito',sans-serif;
-    background:var(--navy);
-    color:var(--ink);
-  }
-
-  .display{font-family:'Anton',sans-serif; letter-spacing:0.5px;}
-
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative;
-    padding:56px 24px 64px;
-    text-align:center;
-    overflow:visible;
-    background:var(--navy);
-  }
-  .burst{
-    position:absolute; width:150px; height:150px; opacity:0.5;
-    background:
-      repeating-conic-gradient(var(--yellow) 0deg 4deg, transparent 4deg 18deg);
-    border-radius:50%;
-    filter:drop-shadow(0 0 0 var(--yellow));
-  }
-  .burst.b1{ top:-30px; left:-30px; }
-  .burst.b2{ top:40px; right:40px; width:110px; height:110px; opacity:0.35;}
-
-  .eyebrow{
-    color:var(--yellow);
-    font-weight:800;
-    letter-spacing:3px;
-    font-size:13px;
-    text-transform:uppercase;
-    margin-bottom:10px;
-  }
-  .hero h1{
-    font-size:clamp(34px,7vw,64px);
-    color:var(--yellow);
-    margin:0;
-    line-height:1.02;
-    text-shadow:3px 3px 0 var(--maroon);
-  }
-  .hero h1 span{ color:#fff; text-shadow:3px 3px 0 var(--pink-deep);}
-  .hero .sub{
-    margin-top:16px;
-    color:#fff;
-    font-weight:800;
-    font-size:clamp(16px,3vw,20px);
-  }
-  .hero .sub em{ color:var(--orange); font-style:normal;}
-  .hero p.desc{
-    max-width:560px; margin:18px auto 0;
-    color:#cfd2ff; font-weight:600; font-size:14.5px; line-height:1.6;
-  }
-
-  /* ---------- FORM CONTAINER ---------- */
-  .wrap{ max-width:640px; margin:-28px auto 60px; padding:0 18px; position:relative; z-index:2;}
-  .card{
-    background:var(--cream);
-    border-radius:20px;
-    padding:26px 22px 30px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.35);
-    margin-bottom:18px;
-    border:3px solid var(--navy);
-  }
-  .card h2{
-    font-family:'Anton',sans-serif;
-    font-size:22px;
-    margin:0 0 4px;
-    color:var(--navy);
-  }
-  .card .hint{ font-size:13px; color:#5b5b6b; margin:0 0 18px; font-weight:600;}
-
-  label{ display:block; font-weight:800; font-size:14px; margin:16px 0 6px; color:var(--navy);}
-  label .req{ color:var(--pink-deep);}
-  label .opt{ color:#8a8a99; font-weight:600; font-size:12px;}
-
-  input[type=text], input[type=email], input[type=tel], textarea, select{
-    width:100%; padding:12px 14px; border-radius:12px;
-    border:2px solid #e2ddc9; background:#fff;
-    font-family:'Nunito',sans-serif; font-size:14.5px; font-weight:600; color:var(--ink);
-    outline:none; transition:.15s;
-  }
-  input:focus, textarea:focus, select:focus{ border-color:var(--blue); box-shadow:0 0 0 3px rgba(44,75,255,0.15);}
-  textarea{ resize:vertical; min-height:80px; line-height:1.5;}
-
-  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-  @media(max-width:480px){ .grid2{grid-template-columns:1fr;} }
-
-  /* team selector */
-  .teams{ display:grid; gap:12px; margin-top:8px;}
-  .team-opt{
-    display:flex; align-items:flex-start; gap:12px;
-    border:3px solid var(--navy); border-radius:14px; padding:14px;
-    cursor:pointer; background:#fff; position:relative; transition:.15s;
-  }
-  .team-opt:hover{ transform:translateY(-1px); }
-  .team-opt input{ display:none; }
-  .team-opt .dot{
-    width:20px;height:20px;border-radius:50%;border:3px solid var(--navy);
-    flex:0 0 auto; margin-top:2px; background:#fff;
-  }
-  .team-opt input:checked ~ .dot{ background:var(--navy); }
-  .team-opt .tt{ font-family:'Anton',sans-serif; font-size:16px; letter-spacing:0.5px;}
-  .team-opt .ts{ font-size:12.5px; font-weight:700; color:#555; margin-top:2px;}
-  .team-opt.social{ border-color:#c9a300;}
-  .team-opt.social input:checked ~ .dot{ background:#c9a300; border-color:#c9a300;}
-  .team-opt.social.active{ background:#fff6d0; }
-  .team-opt.production{ border-color:var(--pink-deep);}
-  .team-opt.production input:checked ~ .dot{ background:var(--pink-deep); border-color:var(--pink-deep);}
-  .team-opt.production.active{ background:#ffe3f3; }
-  .team-opt.copywriter{ border-color:var(--blue-deep);}
-  .team-opt.copywriter input:checked ~ .dot{ background:var(--blue-deep); border-color:var(--blue-deep);}
-  .team-opt.copywriter.active{ background:#e2e8ff; }
-
-  /* dynamic accent per section */
-  .section-social h2{ color:#8a6d00; }
-  .section-production h2{ color:var(--pink-deep); }
-  .section-copywriter h2{ color:var(--blue-deep); }
-  .section-social{ border-color:#c9a300; }
-  .section-production{ border-color:var(--pink-deep); }
-  .section-copywriter{ border-color:var(--blue-deep); }
-
-  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
-  .chip{
-    border:2px solid var(--navy); border-radius:999px; padding:8px 14px;
-    font-weight:800; font-size:13px; cursor:pointer; background:#fff; user-select:none;
-  }
-  .chip input{ display:none; }
-  .chip.checked{ background:var(--navy); color:#fff; }
-
-  .scale{ display:flex; justify-content:space-between; gap:6px; margin-top:8px;}
-  .scale label{ margin:0; text-align:center; flex:1; cursor:pointer; font-size:12px; color:#666;}
-  .scale .num{
-    width:100%; aspect-ratio:1; border-radius:10px; border:2px solid #e2ddc9;
-    display:flex; align-items:center; justify-content:center; font-family:'Anton';
-    font-size:16px; margin-bottom:4px; background:#fff; transition:.15s;
-  }
-  .scale input{ display:none; }
-  .scale input:checked ~ .num{ background:var(--navy); color:#fff; border-color:var(--navy); transform:scale(1.08);}
-
-  .submit-bar{ text-align:center; margin-top:6px;}
-  button.submit{
-    width:100%; padding:16px; border:none; border-radius:14px;
-    background:linear-gradient(90deg,var(--pink),var(--orange));
-    color:#fff; font-family:'Anton',sans-serif; font-size:19px; letter-spacing:1px;
-    cursor:pointer; box-shadow:0 8px 0 var(--maroon); transition:.1s;
-  }
-  button.submit:active{ transform:translateY(4px); box-shadow:0 4px 0 var(--maroon);}
-  button.submit:disabled{ opacity:0.55; cursor:not-allowed; box-shadow:0 8px 0 #999;}
-  .err{ color:var(--pink-deep); font-size:12.5px; font-weight:800; margin-top:4px; display:none;}
-  .footer-note{ text-align:center; color:#b9bdf5; font-size:12px; margin-top:14px; font-weight:600;}
-
-  /* success screen */
-  .success{ display:none; text-align:center; color:#fff; padding:40px 20px;}
-  .success .big{ font-family:'Anton'; font-size:30px; color:var(--yellow); text-shadow:2px 2px 0 var(--maroon);}
-  .success p{ color:#cfd2ff; font-weight:600; max-width:440px; margin:12px auto 0; line-height:1.6;}
-</style>
-</head>
-<body>
-
-<div class="hero">
-  <div class="burst b1"></div>
-  <div class="burst b2"></div>
-  <div class="eyebrow">FPT UNIVERSITY × TRUYỀN THÔNG - MARKETING</div>
-  <h1 class="display">BẠN CÓ THỂ<br>LÀ <span>AI?</span></h1>
-  <div class="sub">"Giữa một vạn người" — <em>tìm ra chất riêng của bạn</em></div>
-  <p class="desc">Ngoài làm sinh viên FPTU bạn còn là Cộng tác viên của Social Team, Production Team hay Copywriter Team.</p>
-</div>
-
-<div class="wrap">
-  <form id="applyForm">
-
-    <!-- STEP 1: THÔNG TIN SINH VIÊN -->
-    <div class="card">
-      <h2>01. Bạn là ai giữa một vạn người?</h2>
-      <p class="hint">Thông tin cơ bản để tụi mình liên hệ và biết bạn đang ở đâu trong hành trình đại học.</p>
-
-      <label>Họ và tên <span class="req">*</span></label>
-      <input type="text" id="fullname" required placeholder="Nguyễn Văn A">
-
-      <div class="grid2">
-        <div>
-          <label>Mã số sinh viên <span class="req">*</span></label>
-          <input type="text" id="msv" required placeholder="VD: SE123456">
-        </div>
-        <div>
-          <label>Khóa <span class="req">*</span></label>
-          <input type="text" id="khoa" required placeholder="VD: K19, K20...">
-        </div>
-      </div>
-
-      <label>Bạn đang học ngành gì? <span class="req">*</span></label>
-      <input type="text" id="nganh" required placeholder="VD: Kỹ thuật phần mềm, Marketing, Ngôn ngữ Anh, Thiết kế đồ họa...">
-
-      <div class="grid2">
-        <div>
-          <label>Số điện thoại <span class="req">*</span></label>
-          <input type="tel" id="phone" required placeholder="09xxxxxxxx">
-        </div>
-        <div>
-          <label>Email <span class="req">*</span></label>
-          <input type="email" id="email" required placeholder="ban@fpt.edu.vn">
-        </div>
-      </div>
-
-      <label>Facebook / Instagram cá nhân <span class="opt">(không bắt buộc, nhưng có thì tụi mình "soi" trước cho quen mặt)</span></label>
-      <input type="text" id="social" placeholder="Link facebook hoặc instagram">
-
-      <label>Portfolio / CV / minh chứng kinh nghiệm <span class="opt">(không bắt buộc)</span></label>
-      <input type="text" id="portfolio" placeholder="Dán link Google Drive, Behance, Canva, YouTube... file bạn đã up sẵn">
-    </div>
-
-    <!-- STEP 2: CHỌN TEAM -->
-    <div class="card">
-      <h2>02. Chọn "phiên bản" bạn muốn thử</h2>
-      <p class="hint">Chọn 1 team bạn muốn ứng tuyển chính. Trả lời câu hỏi bên dưới sẽ thay đổi theo lựa chọn của bạn.</p>
-
-      <div class="teams">
-        <label class="team-opt social" data-team="social">
-          <input type="radio" name="team" value="Social Team" required>
-          <span class="dot"></span>
-          <span>
-            <div class="tt">SOCIAL TEAM</div>
-            <div class="ts">Content · Media · Designer — kể chuyện sinh viên qua nội dung, hình ảnh, thiết kế</div>
-          </span>
-        </label>
-
-        <label class="team-opt production" data-team="production">
-          <input type="radio" name="team" value="Production Team">
-          <span class="dot"></span>
-          <span>
-            <div class="tt">PRODUCTION TEAM</div>
-            <div class="ts">VJ · Livestream · Editor — dấn thân sản xuất, có thể lên hình, dựng viral</div>
-          </span>
-        </label>
-
-        <label class="team-opt copywriter" data-team="copywriter">
-          <input type="radio" name="team" value="Copywriter Team">
-          <span class="dot"></span>
-          <span>
-            <div class="tt">COPYWRITER TEAM</div>
-            <div class="ts">Website · PR — viết nên câu chuyện FPTU bằng chữ, chuẩn SEO, chuẩn báo chí</div>
-          </span>
-        </label>
-      </div>
-    </div>
-
-    <!-- DYNAMIC SECTIONS -->
-    <div class="card section-social" id="sec-social" style="display:none;">
-      <h2>03. Gu Social của bạn thật sự "chất" cỡ nào?</h2>
-      <p class="hint">Không cần văn mẫu — càng thật, càng dễ đậu.</p>
-
-      <label>Kể tên 1 trang/kênh Social (page, TikTok, Instagram...) mà bạn nghĩ "làm content đỉnh thật sự", và nói xem đỉnh ở chỗ nào <span class="req">*</span></label>
-      <textarea id="s1" placeholder="VD: Page A làm content đỉnh vì cách họ mở đầu 3 giây đầu luôn có twist bất ngờ..."></textarea>
-
-      <label>Dạo gần đây có content nào (của trường, của ai đó, hay của chính bạn) khiến bạn tự nhủ "ước gì mình nghĩ ra cái này trước"? <span class="req">*</span></label>
-      <textarea id="s2" placeholder="Kể ngắn gọn, nói vì sao nó hay"></textarea>
-
-      <label>Bạn mạnh nhất ở mảng nào trong Social? <span class="req">*</span></label>
-      <div class="chips" id="s3chips">
-        <label class="chip"><input type="checkbox" value="Viết content / caption"> Viết content / caption</label>
-        <label class="chip"><input type="checkbox" value="Chụp ảnh"> Chụp ảnh</label>
-        <label class="chip"><input type="checkbox" value="Quay dựng video ngắn"> Quay dựng video ngắn</label>
-        <label class="chip"><input type="checkbox" value="Thiết kế (Photoshop/AI/Canva...)"> Thiết kế</label>
-        <label class="chip"><input type="checkbox" value="Săn tin, bắt trend"> Săn tin, bắt trend</label>
-        <label class="chip"><input type="checkbox" value="Chưa biết, nhưng máu học"> Chưa biết, nhưng máu học</label>
-      </div>
-
-      <label>Nếu được giao chụp/viết về 1 buổi sự kiện "chán như con gián" của trường, bạn sẽ làm nội dung đó thú vị bằng cách nào? <span class="req">*</span></label>
-      <textarea id="s4" placeholder="Cho tụi mình thấy tư duy xử lý tình huống thật của bạn"></textarea>
-    </div>
-
-    <div class="card section-production" id="sec-production" style="display:none;">
-      <h2>03. Bạn sẵn sàng "dấn thân" đến đâu?</h2>
-      <p class="hint">Team này cần người dám thử, dám lên hình, dám sai để sửa.</p>
-
-      <label>Bạn từng thử quay/dựng/livestream lần nào chưa? <span class="req">*</span></label>
-      <div class="chips" id="p1chips">
-        <label class="chip"><input type="checkbox" value="Chưa bao giờ, muốn thử lần đầu"> Chưa bao giờ, muốn thử lần đầu</label>
-        <label class="chip"><input type="checkbox" value="Có làm cho cá nhân/CLB rồi"> Có làm cho cá nhân/CLB rồi</label>
-        <label class="chip"><input type="checkbox" value="Từng làm VJ/host trước camera"> Từng làm VJ/host trước camera</label>
-        <label class="chip"><input type="checkbox" value="Từng dựng video/edit chuyên"> Từng dựng video/edit chuyên</label>
-      </div>
-
-      <label>Nếu máy quay đang bật và mọi người đang nhìn bạn, bạn thấy... <span class="req">*</span></label>
-      <div class="scale" id="p2scale">
-        <label><input type="radio" name="p2" value="1"><div class="num">1</div>run</label>
-        <label><input type="radio" name="p2" value="2"><div class="num">2</div>hồi hộp</label>
-        <label><input type="radio" name="p2" value="3"><div class="num">3</div>bình thường</label>
-        <label><input type="radio" name="p2" value="4"><div class="num">4</div>hào hứng</label>
-        <label><input type="radio" name="p2" value="5"><div class="num">5</div>sinh ra để làm điều này</label>
-      </div>
-
-      <label>Kể 1 lần bạn phải xử lý sự cố bất ngờ (mất điện, quên lời thoại, máy hỏng...) — bạn đã làm gì? Nếu chưa từng, hãy nói bạn sẽ xử lý sao <span class="req">*</span></label>
-      <textarea id="p3" placeholder="Production luôn có sự cố, tụi mình muốn biết phản xạ của bạn"></textarea>
-
-      <label>Bạn muốn thử vai trò nào nhất trong team? <span class="req">*</span></label>
-      <div class="chips" id="p4chips">
-        <label class="chip"><input type="checkbox" value="Đứng trước máy quay (VJ/MC)"> Đứng trước máy quay (VJ/MC)</label>
-        <label class="chip"><input type="checkbox" value="Đứng sau máy quay (Quay phim)"> Đứng sau máy quay (Quay phim)</label>
-        <label class="chip"><input type="checkbox" value="Livestream / kỹ thuật"> Livestream / kỹ thuật</label>
-        <label class="chip"><input type="checkbox" value="Dựng phim / Editor"> Dựng phim / Editor</label>
-      </div>
-    </div>
-
-    <div class="card section-copywriter" id="sec-copywriter" style="display:none;">
-      <h2>03. Chữ nghĩa của bạn nặng ký cỡ nào?</h2>
-      <p class="hint">Đừng viết cho "hay", hãy viết cho "thật" — tụi mình đọc được sự khác biệt.</p>
-
-      <label>Viết 1 tiêu đề (headline) cho bài PR giới thiệu chính CLB/Team này, sao cho ai đọc cũng phải bấm vào <span class="req">*</span></label>
-      <input type="text" id="c1" placeholder="Tiêu đề của bạn ở đây">
-
-      <label>Trong 3-4 câu, hãy kể 1 câu chuyện có thật ở trường bạn (một sự kiện, một người, một khoảnh khắc) như thể bạn đang viết bài đăng web <span class="req">*</span></label>
-      <textarea id="c2" placeholder="Viết ngắn gọn nhưng có 'chất báo chí'"></textarea>
-
-      <label>Bạn tự tin nhất ở dạng bài nào? <span class="req">*</span></label>
-      <div class="chips" id="c3chips">
-        <label class="chip"><input type="checkbox" value="Tin tức / sự kiện"> Tin tức / sự kiện</label>
-        <label class="chip"><input type="checkbox" value="PR / giới thiệu thương hiệu"> PR / giới thiệu thương hiệu</label>
-        <label class="chip"><input type="checkbox" value="Bài phỏng vấn/nhân vật"> Bài phỏng vấn / nhân vật</label>
-        <label class="chip"><input type="checkbox" value="SEO / chuẩn tìm kiếm"> SEO / chuẩn tìm kiếm</label>
-        <label class="chip"><input type="checkbox" value="Chưa rành, nhưng thích viết"> Chưa rành, nhưng thích viết</label>
-      </div>
-
-      <label>Có bao giờ bạn viết gì đó (status, bài blog, tiểu luận...) mà tự thấy ưng ý không? Dán link hoặc mô tả ngắn <span class="req">*</span></label>
-      <textarea id="c4" placeholder="Không cần link 'oách', quan trọng là bạn thật sự thích cái mình viết"></textarea>
-    </div>
-
-    <!-- COMMON FINAL SECTION -->
-    <div class="card">
-      <h2>04. Vòng "khai thật"</h2>
-      <p class="hint">Câu này áp dụng cho mọi team — trả lời thật lòng, tụi mình đọc hết đó.</p>
-
-      <label>Vì sao đến lúc này bạn mới quyết định bước ra khỏi vùng an toàn để tìm phiên bản mới của chính mình? <span class="req">*</span></label>
-      <textarea id="why" placeholder="Đây là câu tụi mình đọc kỹ nhất"></textarea>
-
-      <label>Bạn có bao nhiêu thời gian rảnh/tuần cho hoạt động CTV? <span class="req">*</span></label>
-      <div class="chips" id="timechips">
-        <label class="chip"><input type="checkbox" value="Dưới 3 tiếng"> Dưới 3 tiếng</label>
-        <label class="chip"><input type="checkbox" value="3-6 tiếng"> 3-6 tiếng</label>
-        <label class="chip"><input type="checkbox" value="6-10 tiếng"> 6-10 tiếng</label>
-        <label class="chip"><input type="checkbox" value="Trên 10 tiếng"> Trên 10 tiếng</label>
-      </div>
-
-      <label>Nếu chỉ được chọn 1 lý do để tụi mình nhận bạn ngay hôm nay, đó là gì? <span class="req">*</span></label>
-      <input type="text" id="finalpitch" placeholder="Một câu thôi, cho thật 'đắt'">
-    </div>
-
-    <div class="submit-bar">
-      <button type="submit" class="submit" id="submitBtn">GỬI ĐĂNG KÝ</button>
-      <div class="err" id="formErr">Bạn ơi, còn thiếu vài câu bắt buộc (*) ở trên nè!</div>
-      <div class="footer-note">Thông tin của bạn sẽ được lưu lại để Ban tổ chức xem xét ứng tuyển.</div>
-    </div>
-  </form>
-
-  <div class="success" id="successBox">
-    <div class="big">GỬI THÀNH CÔNG! 🎉</div>
-    <p>Vậy là bạn đã chính thức bước vào "một vạn người" — giờ là lúc chờ tụi mình liên hệ lại. Theo dõi email/SĐT bạn đã để lại nhé. Cảm ơn vì đã thật lòng với từng câu trả lời!</p>
-  </div>
-</div>
-
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
 <script>
 /* ============================================================
-   CẤU HÌNH GOOGLE FORM ẨN (điền vào đây sau khi setup xong)
-   1. GOOGLE_FORM_ACTION_URL: URL dạng .../formResponse
-   2. ENTRY_IDS: entry ID tương ứng 12 câu, ĐÚNG THỨ TỰ đã tạo
-   ============================================================ */
-const GOOGLE_FORM_ACTION_URL = "https://l1nk.dev/1zvmcy2"; // dán URL .../formResponse vào đây
-const ENTRY_IDS = {
-  fullname:   "", // entry.xxxxxxxxx
-  msv:        "",
-  khoa:       "",
-  nganh:      "",
-  phone:      "",
-  email:      "",
-  social:     "",
-  portfolio:  "",
-  team:       "",
-  details:    "", // gộp toàn bộ câu trả lời riêng theo team thành 1 đoạn văn
-  why:        "",
-  time:       "",
-  finalpitch: ""
-};
+   GOOGLE SHEETS / GOOGLE APPS SCRIPT
+   Website → Google Apps Script → Google Sheets
 
-function submitToGoogleForm(values){
-  return new Promise((resolve) => {
-    if (!GOOGLE_FORM_ACTION_URL) { resolve(false); return; } // chưa cấu hình -> bỏ qua, không lỗi
-    const iframe = document.getElementById('hidden_iframe');
-    const gform = document.createElement('form');
-    gform.action = GOOGLE_FORM_ACTION_URL;
-    gform.method = 'POST';
-    gform.target = 'hidden_iframe';
-    gform.style.display = 'none';
-    Object.entries(values).forEach(([key, value]) => {
-      const entryId = ENTRY_IDS[key];
-      if (!entryId) return;
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = entryId;
-      input.value = value;
-      gform.appendChild(input);
-    });
-    document.body.appendChild(gform);
-    let resolved = false;
-    iframe.onload = () => {
-      if (resolved) return;
-      resolved = true;
-      document.body.removeChild(gform);
-      resolve(true);
-    };
-    gform.submit();
-    // an toàn: nếu onload không bắn (một số trình duyệt), vẫn coi như đã gửi sau 1.5s
-    setTimeout(() => { if (!resolved) { resolved = true; resolve(true); } }, 1500);
-  });
-}
+   SAU KHI DEPLOY APPS SCRIPT:
+   Dán URL có dạng:
+   https://script.google.com/macros/s/XXXXXXXX/exec
+
+   vào GOOGLE_SCRIPT_URL bên dưới.
+   ============================================================ */
+
+const GOOGLE_SCRIPT_URL = "";
+// Ví dụ:
+// const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/XXXXXXXXXXXX/exec";
+
+
+/* ============================================================
+   HIỂN THỊ TEAM ĐƯỢC CHỌN
+   ============================================================ */
 
 const teamRadios = document.querySelectorAll('input[name="team"]');
+
 const teamOpts = document.querySelectorAll('.team-opt');
-const sections = { social: document.getElementById('sec-social'), production: document.getElementById('sec-production'), copywriter: document.getElementById('sec-copywriter') };
 
-teamRadios.forEach(r => r.addEventListener('change', () => {
-  teamOpts.forEach(o => o.classList.remove('active'));
-  Object.values(sections).forEach(s => s.style.display = 'none');
-  const opt = document.querySelector('.team-opt[data-team]:has(input:checked)');
-  if (opt) {
-    opt.classList.add('active');
-    const key = opt.getAttribute('data-team');
-    sections[key].style.display = 'block';
-  }
-}));
+const sections = {
+  social: document.getElementById('sec-social'),
+  production: document.getElementById('sec-production'),
+  copywriter: document.getElementById('sec-copywriter')
+};
 
-// chip toggle
-document.querySelectorAll('.chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    const input = chip.querySelector('input');
-    input.checked = !input.checked;
-    chip.classList.toggle('checked', input.checked);
+teamRadios.forEach(radio => {
+
+  radio.addEventListener('change', () => {
+
+    // Xóa trạng thái active cũ
+    teamOpts.forEach(option => {
+      option.classList.remove('active');
+    });
+
+    // Ẩn tất cả section
+    Object.values(sections).forEach(section => {
+      section.style.display = 'none';
+    });
+
+    // Tìm team đang được chọn
+    const selectedOption = radio.closest('.team-opt');
+
+    if (selectedOption) {
+
+      selectedOption.classList.add('active');
+
+      const teamKey = selectedOption.getAttribute('data-team');
+
+      if (sections[teamKey]) {
+        sections[teamKey].style.display = 'block';
+      }
+    }
   });
+
 });
 
-function getChipValues(containerId){
-  return Array.from(document.querySelectorAll('#'+containerId+' input:checked')).map(i => i.value);
+
+/* ============================================================
+   CHIP SELECTOR
+   ============================================================ */
+
+document.querySelectorAll('.chip').forEach(chip => {
+
+  chip.addEventListener('click', () => {
+
+    const input = chip.querySelector('input');
+
+    if (!input) return;
+
+    input.checked = !input.checked;
+
+    chip.classList.toggle('checked', input.checked);
+
+  });
+
+});
+
+
+/* ============================================================
+   LẤY GIÁ TRỊ CÁC CHIP ĐƯỢC CHỌN
+   ============================================================ */
+
+function getChipValues(containerId) {
+
+  return Array.from(
+    document.querySelectorAll('#' + containerId + ' input:checked')
+  ).map(input => input.value);
+
 }
 
+
+/* ============================================================
+   GỬI DỮ LIỆU ĐẾN GOOGLE APPS SCRIPT
+   ============================================================ */
+
+async function submitToGoogleSheet(data) {
+
+  if (!GOOGLE_SCRIPT_URL) {
+    throw new Error(
+      'Chưa cấu hình GOOGLE_SCRIPT_URL. Hãy dán URL Google Apps Script.'
+    );
+  }
+
+  const response = await fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8'
+    },
+
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error('Không thể kết nối Google Apps Script.');
+  }
+
+  return true;
+}
+
+
+/* ============================================================
+   FORM
+   ============================================================ */
+
 const form = document.getElementById('applyForm');
+
 const successBox = document.getElementById('successBox');
+
 const formErr = document.getElementById('formErr');
+
 const submitBtn = document.getElementById('submitBtn');
 
+
+/* ============================================================
+   SUBMIT FORM
+   ============================================================ */
+
 form.addEventListener('submit', async (e) => {
+
   e.preventDefault();
+
   formErr.style.display = 'none';
 
-  const team = document.querySelector('input[name="team"]:checked');
+
+  /* ----------------------------------------------------------
+     KIỂM TRA THÔNG TIN CƠ BẢN
+     ---------------------------------------------------------- */
+
+  const team = document.querySelector(
+    'input[name="team"]:checked'
+  );
+
   if (!form.checkValidity() || !team) {
+
     formErr.style.display = 'block';
+
     form.reportValidity();
+
     return;
   }
+
+
+  /* ----------------------------------------------------------
+     XÁC ĐỊNH TEAM
+     ---------------------------------------------------------- */
 
   const teamValue = team.value;
-  let teamKey = teamValue === 'Social Team' ? 'social' : teamValue === 'Production Team' ? 'production' : 'copywriter';
 
-  // validate dynamic required textareas/inputs for chosen team
+  let teamKey;
+
+  if (teamValue === 'Social Team') {
+
+    teamKey = 'social';
+
+  } else if (teamValue === 'Production Team') {
+
+    teamKey = 'production';
+
+  } else {
+
+    teamKey = 'copywriter';
+
+  }
+
+
+  /* ----------------------------------------------------------
+     KIỂM TRA CÂU HỎI BẮT BUỘC THEO TEAM
+     ---------------------------------------------------------- */
+
   const requiredMap = {
-    social: ['s1','s2','s4'], 
-    production: ['p3'],
-    copywriter: ['c1','c2','c4']
+
+    social: [
+      's1',
+      's2',
+      's4'
+    ],
+
+    production: [
+      'p3'
+    ],
+
+    copywriter: [
+      'c1',
+      'c2',
+      'c4'
+    ]
+
   };
+
+
   let missing = false;
+
+
   requiredMap[teamKey].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) missing = true;
+
+    const element = document.getElementById(id);
+
+    if (!element || !element.value.trim()) {
+
+      missing = true;
+
+    }
+
   });
-  if (teamKey === 'social' && getChipValues('s3chips').length === 0) missing = true;
-  if (teamKey === 'production' && (getChipValues('p1chips').length === 0 || getChipValues('p4chips').length === 0 || !document.querySelector('input[name="p2"]:checked'))) missing = true;
-  if (teamKey === 'copywriter' && getChipValues('c3chips').length === 0) missing = true;
-  if (getChipValues('timechips').length === 0) missing = true;
+
+
+  /* Social */
+
+  if (
+    teamKey === 'social' &&
+    getChipValues('s3chips').length === 0
+  ) {
+
+    missing = true;
+
+  }
+
+
+  /* Production */
+
+  if (teamKey === 'production') {
+
+    if (
+      getChipValues('p1chips').length === 0 ||
+      getChipValues('p4chips').length === 0 ||
+      !document.querySelector('input[name="p2"]:checked')
+    ) {
+
+      missing = true;
+
+    }
+
+  }
+
+
+  /* Copywriter */
+
+  if (
+    teamKey === 'copywriter' &&
+    getChipValues('c3chips').length === 0
+  ) {
+
+    missing = true;
+
+  }
+
+
+  /* Thời gian */
+
+  if (
+    getChipValues('timechips').length === 0
+  ) {
+
+    missing = true;
+
+  }
+
 
   if (missing) {
+
+    formErr.textContent =
+      'Bạn ơi, còn thiếu vài câu bắt buộc (*) ở trên nè!';
+
     formErr.style.display = 'block';
+
     return;
+
   }
+
+
+  /* ==========================================================
+     GỘP CÂU TRẢ LỜI THEO TEAM
+     ========================================================== */
 
   let detailsText = '';
+
+
+  /* ---------------- SOCIAL ---------------- */
+
   if (teamKey === 'social') {
+
     detailsText =
-      `[Content đỉnh & vì sao] ${document.getElementById('s1').value}\n\n` +
-      `[Content khiến bạn ước gì nghĩ ra trước] ${document.getElementById('s2').value}\n\n` +
-      `[Điểm mạnh] ${getChipValues('s3chips').join(', ')}\n\n` +
-      `[Xử lý sự kiện nhàm chán] ${document.getElementById('s4').value}`;
-  } else if (teamKey === 'production') {
-    detailsText =
-      `[Kinh nghiệm] ${getChipValues('p1chips').join(', ')}\n\n` +
-      `[Mức độ thoải mái trước máy quay, 1-5] ${document.querySelector('input[name="p2"]:checked')?.value || ''}\n\n` +
-      `[Xử lý sự cố bất ngờ] ${document.getElementById('p3').value}\n\n` +
-      `[Vai trò muốn thử] ${getChipValues('p4chips').join(', ')}`;
-  } else {
-    detailsText =
-      `[Headline PR] ${document.getElementById('c1').value}\n\n` +
-      `[Đoạn kể chuyện] ${document.getElementById('c2').value}\n\n` +
-      `[Dạng bài tự tin nhất] ${getChipValues('c3chips').join(', ')}\n\n` +
-      `[Bài viết ưng ý] ${document.getElementById('c4').value}`;
+
+      `[Content đỉnh & vì sao]\n` +
+      `${document.getElementById('s1').value}\n\n` +
+
+      `[Content khiến bạn ước gì nghĩ ra trước]\n` +
+      `${document.getElementById('s2').value}\n\n` +
+
+      `[Điểm mạnh]\n` +
+      `${getChipValues('s3chips').join(', ')}\n\n` +
+
+      `[Xử lý sự kiện nhàm chán]\n` +
+      `${document.getElementById('s4').value}`;
+
   }
+
+
+  /* ---------------- PRODUCTION ---------------- */
+
+  else if (teamKey === 'production') {
+
+    const cameraLevel =
+      document.querySelector(
+        'input[name="p2"]:checked'
+      )?.value || '';
+
+
+    detailsText =
+
+      `[Kinh nghiệm]\n` +
+      `${getChipValues('p1chips').join(', ')}\n\n` +
+
+      `[Mức độ thoải mái trước máy quay, 1-5]\n` +
+      `${cameraLevel}\n\n` +
+
+      `[Xử lý sự cố bất ngờ]\n` +
+      `${document.getElementById('p3').value}\n\n` +
+
+      `[Vai trò muốn thử]\n` +
+      `${getChipValues('p4chips').join(', ')}`;
+
+  }
+
+
+  /* ---------------- COPYWRITER ---------------- */
+
+  else {
+
+    detailsText =
+
+      `[Headline PR]\n` +
+      `${document.getElementById('c1').value}\n\n` +
+
+      `[Đoạn kể chuyện]\n` +
+      `${document.getElementById('c2').value}\n\n` +
+
+      `[Dạng bài tự tin nhất]\n` +
+      `${getChipValues('c3chips').join(', ')}\n\n` +
+
+      `[Bài viết ưng ý]\n` +
+      `${document.getElementById('c4').value}`;
+
+  }
+
+
+  /* ==========================================================
+     TẠO DỮ LIỆU GỬI GOOGLE SHEETS
+     ========================================================== */
 
   const entry = {
-    fullname: document.getElementById('fullname').value,
-    msv: document.getElementById('msv').value,
-    khoa: document.getElementById('khoa').value,
-    nganh: document.getElementById('nganh').value,
-    phone: document.getElementById('phone').value,
-    email: document.getElementById('email').value,
-    social: document.getElementById('social').value,
-    portfolio: document.getElementById('portfolio').value,
-    team: teamValue,
-    details: detailsText,
-    why: document.getElementById('why').value,
-    time: getChipValues('timechips').join(', '),
-    finalpitch: document.getElementById('finalpitch').value
+
+    fullname:
+      document.getElementById('fullname').value.trim(),
+
+    msv:
+      document.getElementById('msv').value.trim(),
+
+    khoa:
+      document.getElementById('khoa').value.trim(),
+
+    nganh:
+      document.getElementById('nganh').value.trim(),
+
+    phone:
+      document.getElementById('phone').value.trim(),
+
+    email:
+      document.getElementById('email').value.trim(),
+
+    social:
+      document.getElementById('social').value.trim(),
+
+    portfolio:
+      document.getElementById('portfolio').value.trim(),
+
+    team:
+      teamValue,
+
+    details:
+      detailsText,
+
+    why:
+      document.getElementById('why').value.trim(),
+
+    time:
+      getChipValues('timechips').join(', '),
+
+    finalpitch:
+      document.getElementById('finalpitch').value.trim()
+
   };
 
+
+  /* ==========================================================
+     TRẠNG THÁI ĐANG GỬI
+     ========================================================== */
+
   submitBtn.disabled = true;
+
   submitBtn.textContent = 'ĐANG GỬI...';
 
+
   try {
-    await submitToGoogleForm(entry);
-    // backup trong Claude (best-effort, không chặn nếu lỗi/không khả dụng)
-    try {
-      const key = 'ctv-app:' + Date.now() + '-' + Math.random().toString(36).slice(2,8);
-      await window.storage.set(key, JSON.stringify({ ts: new Date().toISOString(), ...entry }), true);
-    } catch (e) { /* im lặng bỏ qua nếu không chạy trong Claude */ }
+
+    /* --------------------------------------------------------
+       GỬI TRỰC TIẾP ĐẾN GOOGLE APPS SCRIPT
+       -------------------------------------------------------- */
+
+    await submitToGoogleSheet(entry);
+
+
+    /* --------------------------------------------------------
+       HIỂN THỊ THÀNH CÔNG
+       -------------------------------------------------------- */
 
     form.style.display = 'none';
+
     successBox.style.display = 'block';
-    window.scrollTo({top:0, behavior:'smooth'});
-  } catch (err) {
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+
+  } catch (error) {
+
+    console.error(
+      'Lỗi gửi Google Sheets:',
+      error
+    );
+
+
     submitBtn.disabled = false;
+
     submitBtn.textContent = 'GỬI ĐĂNG KÝ';
-    formErr.textContent = 'Có lỗi khi gửi, bạn thử lại giúp mình nhé!';
+
+
+    formErr.textContent =
+      'Có lỗi khi gửi đăng ký. Bạn thử lại giúp mình nhé!';
+
+
     formErr.style.display = 'block';
+
   }
+
 });
 </script>
-
-</body>
-</html>
