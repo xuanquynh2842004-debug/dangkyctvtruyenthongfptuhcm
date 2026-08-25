@@ -13,6 +13,9 @@
     --pink:#ff3fa4;
     --pink-deep:#c2126f;
     --blue:#2c4bff;
+    --purple:#6c3ce0;
+    --purple-deep:#4423a8;
+    --green:#7ed957;
     --blue-deep:#101a8f;
     --maroon:#7a1414;
     --orange:#e8622c;
@@ -38,15 +41,6 @@
     overflow:visible;
     background:var(--navy);
   }
-  .burst{
-    position:absolute; width:150px; height:150px; opacity:0.5;
-    background:
-      repeating-conic-gradient(var(--yellow) 0deg 4deg, transparent 4deg 18deg);
-    border-radius:50%;
-    filter:drop-shadow(0 0 0 var(--yellow));
-  }
-  .burst.b1{ top:-30px; left:-30px; }
-  .burst.b2{ top:40px; right:40px; width:110px; height:110px; opacity:0.35;}
 
   .eyebrow{
     color:var(--yellow);
@@ -132,17 +126,17 @@
   .team-opt.production{ border-color:var(--pink-deep);}
   .team-opt.production input:checked ~ .dot{ background:var(--pink-deep); border-color:var(--pink-deep);}
   .team-opt.production.active{ background:#ffe3f3; }
-  .team-opt.copywriter{ border-color:var(--blue-deep);}
-  .team-opt.copywriter input:checked ~ .dot{ background:var(--blue-deep); border-color:var(--blue-deep);}
-  .team-opt.copywriter.active{ background:#e2e8ff; }
+  .team-opt.digital{ border-color:var(--purple-deep);}
+  .team-opt.digital input:checked ~ .dot{ background:var(--purple-deep); border-color:var(--purple-deep);}
+  .team-opt.digital.active{ background:#ece3ff; }
 
   /* dynamic accent per section */
   .section-social h2{ color:#8a6d00; }
   .section-production h2{ color:var(--pink-deep); }
-  .section-copywriter h2{ color:var(--blue-deep); }
+  .section-digital h2{ color:var(--purple-deep); }
   .section-social{ border-color:#c9a300; }
   .section-production{ border-color:var(--pink-deep); }
-  .section-copywriter{ border-color:var(--blue-deep); }
+  .section-digital{ border-color:var(--purple-deep); }
 
   .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
   .chip{
@@ -183,12 +177,10 @@
 <body>
 
 <div class="hero">
-  <div class="burst b1"></div>
-  <div class="burst b2"></div>
   <div class="eyebrow">FPT UNIVERSITY × TRUYỀN THÔNG - MARKETING</div>
   <h1 class="display">BẠN CÓ THỂ<br>LÀ <span>AI?</span></h1>
   <div class="sub">"Giữa một vạn người" — <em>tìm ra chất riêng của bạn</em></div>
-  <p class="desc">Ngoài làm sinh viên FPTU bạn còn là Cộng tác viên của Social Team, Production Team hay Copywriter Team.</p>
+  <p class="desc">Ngoài làm sinh viên FPTU bạn còn là Cộng tác viên của Social Team, Production Team hay Digital Team ?</p>
 </div>
 
 <div class="wrap">
@@ -258,12 +250,12 @@
           </span>
         </label>
 
-        <label class="team-opt copywriter" data-team="copywriter">
-          <input type="radio" name="team" value="Copywriter Team">
+        <label class="team-opt digital" data-team="digital">
+          <input type="radio" name="team" value="Digital Team">
           <span class="dot"></span>
           <span>
-            <div class="tt">COPYWRITER TEAM</div>
-            <div class="ts">Website · PR — viết nên câu chuyện FPTU bằng chữ, chuẩn SEO, chuẩn báo chí</div>
+            <div class="tt">DIGITAL TEAM</div>
+            <div class="ts">Performance · Data · AI & Automation — nhúng tay vào chiến dịch Digital thực tế</div>
           </span>
         </label>
       </div>
@@ -327,33 +319,41 @@
       </div>
     </div>
 
-    <div class="card section-copywriter" id="sec-copywriter" style="display:none;">
-      <h2>03. Chữ nghĩa của bạn nặng ký cỡ nào?</h2>
-      <p class="hint">Đừng viết cho "hay", hãy viết cho "thật" — tụi mình đọc được sự khác biệt.</p>
+    <div class="card section-digital" id="sec-digital" style="display:none;">
+      <h2>03. Bạn "nhúng tay" vào Digital tới đâu rồi?</h2>
+      <p class="hint">Không cần đã giỏi — chỉ cần cho tụi mình thấy bạn thật sự tò mò và chịu mày mò.</p>
 
-      <label>Viết 1 tiêu đề (headline) cho bài PR giới thiệu chính CLB/Team này, sao cho ai đọc cũng phải bấm vào <span class="req">*</span></label>
-      <input type="text" id="c1" placeholder="Tiêu đề của bạn ở đây">
-
-      <label>Trong 3-4 câu, hãy kể 1 câu chuyện có thật ở trường bạn (một sự kiện, một người, một khoảnh khắc) như thể bạn đang viết bài đăng web <span class="req">*</span></label>
-      <textarea id="c2" placeholder="Viết ngắn gọn nhưng có 'chất báo chí'"></textarea>
-
-      <label>Bạn tự tin nhất ở dạng bài nào? <span class="req">*</span></label>
-      <div class="chips" id="c3chips">
-        <label class="chip"><input type="checkbox" value="Tin tức / sự kiện"> Tin tức / sự kiện</label>
-        <label class="chip"><input type="checkbox" value="PR / giới thiệu thương hiệu"> PR / giới thiệu thương hiệu</label>
-        <label class="chip"><input type="checkbox" value="Bài phỏng vấn/nhân vật"> Bài phỏng vấn / nhân vật</label>
-        <label class="chip"><input type="checkbox" value="SEO / chuẩn tìm kiếm"> SEO / chuẩn tìm kiếm</label>
-        <label class="chip"><input type="checkbox" value="Chưa rành, nhưng thích viết"> Chưa rành, nhưng thích viết</label>
+      <label>Bạn từng thử chạy quảng cáo (Facebook/Google/TikTok Ads), làm Landing Page, hay dùng công cụ tự động hóa (automation/CRM) chưa? <span class="req">*</span></label>
+      <div class="chips" id="d1chips">
+        <label class="chip"><input type="checkbox" value="Chưa từng, mới chỉ đọc/xem qua"> Chưa từng, mới chỉ đọc/xem qua</label>
+        <label class="chip"><input type="checkbox" value="Tự học qua video/khóa online"> Tự học qua video/khóa online</label>
+        <label class="chip"><input type="checkbox" value="Đã chạy thử ngân sách nhỏ (ads cá nhân/CLB)"> Đã chạy thử ngân sách nhỏ</label>
+        <label class="chip"><input type="checkbox" value="Đã làm Landing Page hoặc automation cho dự án nào đó"> Đã làm Landing Page/automation cho dự án</label>
       </div>
 
-      <label>Có bao giờ bạn viết gì đó (status, bài blog, tiểu luận...) mà tự thấy ưng ý không? Dán link hoặc mô tả ngắn <span class="req">*</span></label>
-      <textarea id="c4" placeholder="Không cần link 'oách', quan trọng là bạn thật sự thích cái mình viết"></textarea>
+      <label>Kể 1 quảng cáo (FB/Google/TikTok) bạn từng thấy và nghĩ "cái này chạy hiệu quả thật" — vì sao bạn nghĩ vậy? <span class="req">*</span></label>
+      <textarea id="d1" placeholder="Có thể đoán dựa trên visual, copy, hoặc vì bạn thấy nó lặp lại nhiều lần trên newsfeed của mình..."></textarea>
+
+      <label>Giả sử 1 chiến dịch đang chạy nhưng tỷ lệ click/chuyển đổi thấp hơn kỳ vọng — bạn sẽ nhìn vào đâu đầu tiên để tìm nguyên nhân? <span class="req">*</span></label>
+      <textarea id="d2" placeholder="Không cần đúng chuyên môn, tụi mình muốn xem cách bạn tư duy với số liệu"></textarea>
+
+      <label>Bạn đã từng dùng AI tool nào (ChatGPT, Claude, Gemini...) cho việc học/công việc chưa? Dùng để làm gì? <span class="req">*</span></label>
+      <textarea id="d3" placeholder="VD: dùng để research, viết content nháp, phân tích data, tự động hóa việc lặp lại..."></textarea>
+
+      <label>Mảng nào trong Digital khiến bạn tò mò/hứng thú nhất? <span class="req">*</span></label>
+      <div class="chips" id="d4chips">
+        <label class="chip"><input type="checkbox" value="Chạy Ads (Facebook/Google/TikTok)"> Chạy Ads (Facebook/Google/TikTok)</label>
+        <label class="chip"><input type="checkbox" value="Data & phân tích chiến dịch"> Data & phân tích chiến dịch</label>
+        <label class="chip"><input type="checkbox" value="AI ứng dụng vào Marketing"> AI ứng dụng vào Marketing</label>
+        <label class="chip"><input type="checkbox" value="Automation / Workflow"> Automation / Workflow</label>
+        <label class="chip"><input type="checkbox" value="Landing Page & CRM"> Landing Page & CRM</label>
+      </div>
     </div>
 
     <!-- COMMON FINAL SECTION -->
     <div class="card">
-      <h2>04. Vòng "khai thật"</h2>
-      <p class="hint">Câu này áp dụng cho mọi team — trả lời thật lòng, tụi mình đọc hết đó.</p>
+      <h2>04. Thật lòng bày tỏ</h2>
+      <p class="hint">Câu này áp dụng cho mọi team — hãy cho tụi mình biết về bạn nhiều hơn!</p>
 
       <label>Vì sao đến lúc này bạn mới quyết định bước ra khỏi vùng an toàn để tìm phiên bản mới của chính mình? <span class="req">*</span></label>
       <textarea id="why" placeholder="Đây là câu tụi mình đọc kỹ nhất"></textarea>
@@ -417,7 +417,7 @@ function submitToAppsScript(values){
 
 const teamRadios = document.querySelectorAll('input[name="team"]');
 const teamOpts = document.querySelectorAll('.team-opt');
-const sections = { social: document.getElementById('sec-social'), production: document.getElementById('sec-production'), copywriter: document.getElementById('sec-copywriter') };
+const sections = { social: document.getElementById('sec-social'), production: document.getElementById('sec-production'), digital: document.getElementById('sec-digital') };
 
 teamRadios.forEach(r => r.addEventListener('change', () => {
   teamOpts.forEach(o => o.classList.remove('active'));
@@ -460,13 +460,13 @@ form.addEventListener('submit', async (e) => {
   }
 
   const teamValue = team.value;
-  let teamKey = teamValue === 'Social Team' ? 'social' : teamValue === 'Production Team' ? 'production' : 'copywriter';
+  let teamKey = teamValue === 'Social Team' ? 'social' : teamValue === 'Production Team' ? 'production' : 'digital';
 
   // validate dynamic required textareas/inputs for chosen team
   const requiredMap = {
     social: ['s1','s2','s4'], 
     production: ['p3'],
-    copywriter: ['c1','c2','c4']
+    digital: ['d1','d2','d3']
   };
   let missing = false;
   requiredMap[teamKey].forEach(id => {
@@ -475,7 +475,7 @@ form.addEventListener('submit', async (e) => {
   });
   if (teamKey === 'social' && getChipValues('s3chips').length === 0) missing = true;
   if (teamKey === 'production' && (getChipValues('p1chips').length === 0 || getChipValues('p4chips').length === 0 || !document.querySelector('input[name="p2"]:checked'))) missing = true;
-  if (teamKey === 'copywriter' && getChipValues('c3chips').length === 0) missing = true;
+  if (teamKey === 'digital' && (getChipValues('d1chips').length === 0 || getChipValues('d4chips').length === 0)) missing = true;
   if (getChipValues('timechips').length === 0) missing = true;
 
   if (missing) {
@@ -498,10 +498,11 @@ form.addEventListener('submit', async (e) => {
       `[Vai trò muốn thử] ${getChipValues('p4chips').join(', ')}`;
   } else {
     detailsText =
-      `[Headline PR] ${document.getElementById('c1').value}\n\n` +
-      `[Đoạn kể chuyện] ${document.getElementById('c2').value}\n\n` +
-      `[Dạng bài tự tin nhất] ${getChipValues('c3chips').join(', ')}\n\n` +
-      `[Bài viết ưng ý] ${document.getElementById('c4').value}`;
+      `[Đã thử qua] ${getChipValues('d1chips').join(', ')}\n\n` +
+      `[Quảng cáo ấn tượng & vì sao] ${document.getElementById('d1').value}\n\n` +
+      `[Cách tìm nguyên nhân khi tỷ lệ chuyển đổi thấp] ${document.getElementById('d2').value}\n\n` +
+      `[Kinh nghiệm dùng AI tool] ${document.getElementById('d3').value}\n\n` +
+      `[Mảng hứng thú nhất] ${getChipValues('d4chips').join(', ')}`;
   }
 
   const entry = {
